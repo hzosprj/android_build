@@ -459,6 +459,15 @@ function _lunch_meat()
         then
             echo "Did you mean -${product/*_/}? (dash instead of underscore)"
         fi
+        echo
+        echo "** Don't have a product spec for: '$product'"
+        echo "** Do you have the right repo manifest?"
+        product=
+    fi
+
+    if [ -z "$product" -o -z "$variant" ]
+    then
+        echo
         return 1
     fi
     export TARGET_PRODUCT=$(_get_build_var_cached TARGET_PRODUCT)
@@ -474,7 +483,7 @@ function _lunch_meat()
     set_stuff_for_environment
     [[ -n "${ANDROID_QUIET_BUILD:-}" ]] || printconfig
 
-    if [[ -z "${ANDROID_QUIET_BUILD}" && -z "${HZ_BUILD}" ]]; then
+    if [[ -z "${ANDROID_QUIET_BUILD}" && -z "${HERTZIFY_BUILD}" ]]; then
         local spam_for_lunch=$(gettop)/build/make/tools/envsetup/spam_for_lunch
         if [[ -x $spam_for_lunch ]]; then
             $spam_for_lunch
@@ -573,6 +582,21 @@ function lunch()
         if [[ -z $variant ]]; then
             variant=eng
         fi
+    fi
+
+    if ! check_product $product $release
+    then
+        # if we can't find a product, try to grab it off the HERTZIFYOS GitHub
+        T=$(gettop)
+        cd $T > /dev/null
+        vendor/hertzify/build/tools/roomservice.py $product
+        cd - > /dev/null
+        check_product $product $release
+    else
+        T=$(gettop)
+        cd $T > /dev/null
+        vendor/hertzify/build/tools/roomservice.py $product true
+        cd - > /dev/null
     fi
 
     # Validate the selection and set all the environment stuff
