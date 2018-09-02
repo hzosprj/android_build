@@ -204,6 +204,41 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   # Dump fingerprints
   script.Print("Target: {}".format(target_info.fingerprint))
 
+  android_version = target_info.GetBuildProp("ro.build.version.release")
+  hz_version = target_info.GetBuildProp("ro.hz.version")
+  build_id = target_info.GetBuildProp("ro.build.id")
+  build_date = target_info.GetBuildProp("ro.build.date")
+  security_patch = target_info.GetBuildProp("ro.build.version.security_patch")
+  device = target_info.GetBuildProp("ro.product.device")
+
+  script.Print("------------------------------------------------------");
+  script.Print("                                                      ");
+  script.Print("                                                      ");
+  script.Print("░▒▓█▓▒░░▒▓█▓▒░▒▓████████▓▒░░▒▓██████▓▒░ ░▒▓███████▓▒░ ");
+  script.Print("░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░        ");
+  script.Print("░▒▓█▓▒░░▒▓█▓▒░    ░▒▓██▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░        ");
+  script.Print("░▒▓████████▓▒░  ░▒▓██▓▒░  ░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░  ");
+  script.Print("░▒▓█▓▒░░▒▓█▓▒░░▒▓██▓▒░    ░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░ ");
+  script.Print("░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░ ");
+  script.Print("░▒▓█▓▒░░▒▓█▓▒░▒▓████████▓▒░░▒▓██████▓▒░░▒▓███████▓▒░  ");                                                                        
+  script.Print("                                                      ");
+  script.Print("                        By HDZ                        ");
+  script.Print("                                                      ");
+  script.Print("------------------------------------------------------");
+  script.Print(" Android version: %s"%(android_version));
+  script.Print("");
+  script.Print(" HZ version: %s"%hz_version));
+  script.Print("");
+  script.Print(" Build id         : %s"%(build_id));
+  script.Print("");
+  script.Print(" Build date       : %s"%(build_date));
+  script.Print("");
+  script.Print(" Security patch   : %s"%(security_patch));
+  script.Print("");
+  script.Print(" Device           : %s"%(device));
+  script.Print("");
+  script.Print("------------------------------------------------------");
+
   device_specific.FullOTA_InstallBegin()
 
   # All other partitions as well as the data wipe use 10% of the progress, and
