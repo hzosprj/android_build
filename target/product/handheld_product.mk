@@ -24,7 +24,6 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/media_product.mk)
 PRODUCT_PACKAGES += \
     Browser2 \
     Calendar \
-    Camera2 \
     Contacts \
     DeskClock \
     Gallery2 \
@@ -36,7 +35,8 @@ PRODUCT_PACKAGES += \
 
 ifeq ($(HERTZIFY_BUILD),)
 PRODUCT_PACKAGES += \
-    LatinIME
+    LatinIME \
+    Camera2
 endif
 
 PRODUCT_PACKAGES_DEBUG += \
